@@ -4,7 +4,8 @@ import java.io.InputStreamReader;
 import java.nio.Buffer;
 
 import com.student.manager.Student;
-
+import com.student.manager.StudentDao;
+ 
 public class StudentManagment {
 
 	public static void main(String[] args)throws IOException {
@@ -20,7 +21,7 @@ public class StudentManagment {
 			int c=Integer.parseInt(br.readLine());
 			if(c==1) {
 				//add student..
-				System.out.println("Enter user name :");
+	 			System.out.println("Enter user name :");
 				String name = br.readLine();
 				
 				System.out.println("Enter user phone :");
@@ -31,12 +32,30 @@ public class StudentManagment {
 				
 				//create student object to store student
 				Student st=new Student(name, phone, city);
+				boolean answer = StudentDao.insertStudentToDB(st);
+				if(answer) {
+					System.out.println("Student is addeded successfully...");
+				}else {
+					System.out.println("Something went wrong try again...");
+				}
 				System.out.println(st);
 				
 			}else if(c==2) {
 				//delete student
+				System.out.println("Enter student In to delete: ");
+				int userId =Integer.parseInt(br.readLine());
+				boolean f = StudentDao.deleteStudent(userId);
+				if(f) {
+					System.out.println("Deleted.......");
+				}else {
+					System.out.println("Something went wrong.......");
+				}
+				
+				
 			}else if(c==3) {
 				//display students..
+				StudentDao.showAllStudent();
+				
 			}else if(c==4) {
 				//exit
 				break;
